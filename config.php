@@ -1,0 +1,4 @@
+<?php
+
+$MIN_PER_HOUR = 60;
+$MIN_RER_DAY = $MIN_PER_HOUR * 24;
