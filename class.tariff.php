@@ -46,9 +46,11 @@ trait Details
 
     public function addDriver(bool $driver = false)
     {
-        if ($driver === true) {
-            return PRICE_DRIVER;
+        if (!$driver) {
+            return null;
         }
+
+        return PRICE_DRIVER;
     }
 }
 
