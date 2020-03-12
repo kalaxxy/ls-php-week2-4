@@ -1,4 +1,5 @@
 <?php
+include "config.php";
 
 ini_set('error_reporting', E_ALL);
 ini_set('display_errors', 1);
@@ -34,22 +35,19 @@ abstract class Tariff implements iTariff
 
 trait Details
 {
-    private $PRICE_GPS = 15;
-    private $PRICE_DRIVER = 100;
-
     public function getGps(bool $gps = false, $mins)
     {
-        if ($gps === true) {
-            $roundedHour = ceil($mins / 60); //$MIN_PER_HOUR
-            $sum = $this->PRICE_GPS * $roundedHour;
-            return $sum;
+        if (!$gps) {
+            return null;
         }
+        $roundedHour = ceil($mins / MIN_PER_HOUR);
+        return PRICE_GPS * $roundedHour;
     }
 
     public function addDriver(bool $driver = false)
     {
         if ($driver === true) {
-            return $this->PRICE_DRIVER;
+            return PRICE_DRIVER;
         }
     }
 }
@@ -78,7 +76,7 @@ class TariffHour extends Tariff
 
     public function priceCalc($kms, $mins, $age, bool $gps = false, bool $driver = false)
     {
-        $roundedHour = ceil($mins / 60); //$MIN_PER_HOUR
+        $roundedHour = ceil($mins / MIN_PER_HOUR);
         echo "Часов: " . $roundedHour . "<br>";
         $sum = ($this->pricePerKm * $kms + $this->pricePerTime * $roundedHour) * $this->getAgeRatio($age) + $this->getGps($gps, $mins) + $this->addDriver($driver);
         echo $sum;
@@ -94,7 +92,7 @@ class TariffDay extends Tariff
 
     public function priceCalc($kms, $mins, $age, bool $gps = false, bool $driver = false)
     {
-        $roundedDay = ceil($mins / 1440); //$MIN_RER_DAY
+        $roundedDay = ceil($mins / MIN_RER_DAY);
         echo "Суток: " . $roundedDay . "<br>";
         $sum = ($this->pricePerKm * $kms + $this->pricePerTime * $roundedDay) * $this->getAgeRatio($age) + $this->getGps($gps, $mins) + $this->addDriver($driver);
         echo $sum;
