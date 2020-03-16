@@ -11,7 +11,7 @@ $tariffHour->priceCalc(40, 20, 20, true, true);
 
 echo "<div>Тариф дневной:</div>";
 $tariffDay = new TariffDay;
-$tariffDay->priceCalc(40, 20, 20, true);
+$tariffDay->priceCalc(40, 1470, 20, false);
 
 echo "<div>Тариф студенческий:</div>";
 $tariffStudent = new TariffStudent;

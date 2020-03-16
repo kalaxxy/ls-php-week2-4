@@ -94,7 +94,11 @@ class TariffDay extends Tariff
 
     public function priceCalc($kms, $mins, $age, bool $gps = false, bool $driver = false)
     {
-        $roundedDay = ceil($mins / MIN_RER_DAY);
+        if ($mins % MIN_RER_DAY < 30) {
+            $roundedDay = floor($mins / MIN_RER_DAY);
+        } else {
+            $roundedDay = ceil($mins / MIN_RER_DAY);
+        }
         echo "Суток: " . $roundedDay . "<br>";
         $sum = ($this->pricePerKm * $kms + $this->pricePerTime * $roundedDay) * $this->getAgeRatio($age) + $this->getGps($gps, $mins) + $this->addDriver($driver);
         echo $sum;
